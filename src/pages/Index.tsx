@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Shield, CheckCircle, Users, Mail, Globe, ArrowRight } from 'lucide-react';
@@ -43,41 +42,75 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background font-sans">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-[#4AB957] to-[#58585A] rounded-lg flex items-center justify-center">
+                <Shield className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-bold text-xl bg-gradient-to-r from-[#4AB957] to-[#58585A] bg-clip-text text-transparent">
+                CIS Compliance
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <a
+                href="https://smartedge.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                SmartEdge.in
+              </a>
+              <Button variant="outline" size="sm">
+                Sign In
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="absolute inset-0 gradient-bg" />
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#4AB957]/10 to-[#58585A]/10" />
         <div className="relative container mx-auto px-6">
           <div className="text-center animate-fade-in">
-            <h1 className="text-5xl lg:text-7xl font-bold mb-8 text-gradient leading-tight">
-              CIS Web Compliance
+            <h1 className="text-6xl lg:text-8xl font-bold mb-8 leading-tight">
+              <span className="bg-gradient-to-r from-[#4AB957] to-[#58585A] bg-clip-text text-transparent">
+                CIS Web Compliance
+              </span>
             </h1>
-            <p className="text-xl lg:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl lg:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
               Professional compliance checking tool for CIS benchmarks. 
-              Ensure your systems meet industry security standards.
+              Ensure your systems meet industry security standards with our comprehensive platform.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/benchmarks">
-                <Button size="lg" className="bg-brand-secondary hover:bg-brand-secondary/90 text-white px-8 py-6 text-lg">
-                  View Benchmarks
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-              <Link to="/compliance">
-                <Button variant="outline" size="lg" className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white px-8 py-6 text-lg">
-                  Compliance Check
-                </Button>
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Button 
+                size="lg" 
+                className="bg-[#4AB957] hover:bg-[#4AB957]/90 text-white px-10 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+              >
+                View Benchmarks
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-[#58585A] text-[#58585A] hover:bg-[#58585A] hover:text-white px-10 py-6 text-lg font-semibold"
+              >
+                Compliance Check
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* About CIS Section */}
-      <section className="py-24 bg-card/50">
+      <section className="py-24 bg-card/30">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="animate-slide-in-left">
+            <div className="space-y-6">
               <h2 className="text-4xl lg:text-5xl font-bold mb-8">
                 What is CIS?
               </h2>
@@ -100,10 +133,13 @@ const Index = () => {
             </div>
             <div className="grid gap-6">
               {features.map((feature, index) => (
-                <Card key={index} className="p-6 hover:shadow-lg transition-all duration-300 animate-scale-in glass-effect" style={{ animationDelay: `${index * 100}ms` }}>
+                <Card 
+                  key={index} 
+                  className="p-6 hover:shadow-xl transition-all duration-300 border-l-4 border-l-[#4AB957] hover:scale-105"
+                >
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-brand-secondary/10 rounded-lg flex items-center justify-center">
-                      <feature.icon className="w-6 h-6 text-brand-secondary" />
+                    <div className="w-12 h-12 bg-[#4AB957]/10 rounded-lg flex items-center justify-center">
+                      <feature.icon className="w-6 h-6 text-[#4AB957]" />
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
@@ -120,7 +156,7 @@ const Index = () => {
       {/* How It Works Section */}
       <section className="py-24">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16 animate-fade-in">
+          <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold mb-8">
               How It Works
             </h2>
@@ -130,14 +166,14 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 gap-12">
             {steps.map((item, index) => (
-              <div key={index} className="flex flex-col items-start animate-scale-in" style={{ animationDelay: `${index * 150}ms` }}>
-                <div className="text-3xl font-bold text-brand-secondary mb-4">
+              <div key={index} className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#4AB957] to-[#58585A] rounded-full flex items-center justify-center text-white text-2xl font-bold">
                   {item.step}
                 </div>
-                <h3 className="text-2xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
+                <h3 className="text-2xl font-semibold">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
@@ -145,49 +181,53 @@ const Index = () => {
       </section>
 
       {/* About SmartEdge Section */}
-      <section className="py-24 bg-card/50">
+      <section className="py-24 bg-card/30">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto text-center animate-fade-in">
+          <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl lg:text-5xl font-bold mb-8">
               About SmartEdge
             </h2>
-            <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
+            <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
               SmartEdge is a leading provider of innovative technology solutions for businesses.
               We specialize in security compliance, infrastructure management, and digital transformation.
               Our mission is to help organizations stay secure and compliant in today's complex technology landscape.
             </p>
             <div className="grid sm:grid-cols-2 gap-8">
-              <div className="flex flex-col items-center space-y-3">
-                <Globe className="w-10 h-10 text-brand-secondary" />
-                <h3 className="text-xl font-semibold">Visit Our Website</h3>
-                <Link 
-                  to="https://smartedge.in" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-brand-secondary hover:underline inline-flex items-center"
-                >
-                  SmartEdge.in
-                  <ArrowRight className="ml-1 w-4 h-4" />
-                </Link>
-              </div>
-              <div className="flex flex-col items-center space-y-3">
-                <Mail className="w-10 h-10 text-brand-secondary" />
-                <h3 className="text-xl font-semibold">Get in Touch</h3>
-                <Link 
-                  to="mailto:contact@smartedge.in"
-                  className="text-brand-secondary hover:underline inline-flex items-center"
-                >
-                  contact@smartedge.in
-                  <ArrowRight className="ml-1 w-4 h-4" />
-                </Link>
-              </div>
+              <Card className="p-8 hover:shadow-lg transition-all">
+                <div className="flex flex-col items-center space-y-4">
+                  <Globe className="w-12 h-12 text-[#4AB957]" />
+                  <h3 className="text-xl font-semibold">Visit Our Website</h3>
+                  <a 
+                    href="https://smartedge.in" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[#4AB957] hover:underline inline-flex items-center font-semibold"
+                  >
+                    SmartEdge.in
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </a>
+                </div>
+              </Card>
+              <Card className="p-8 hover:shadow-lg transition-all">
+                <div className="flex flex-col items-center space-y-4">
+                  <Mail className="w-12 h-12 text-[#4AB957]" />
+                  <h3 className="text-xl font-semibold">Get in Touch</h3>
+                  <a 
+                    href="mailto:contact@smartedge.in"
+                    className="text-[#4AB957] hover:underline inline-flex items-center font-semibold"
+                  >
+                    contact@smartedge.in
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </a>
+                </div>
+              </Card>
             </div>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 bg-brand-secondary/10">
+      <section className="py-20 bg-gradient-to-r from-[#4AB957]/10 to-[#58585A]/10">
         <div className="container mx-auto px-6">
           <div className="text-center mb-10">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">Let's Connect</h2>
@@ -198,20 +238,20 @@ const Index = () => {
           </div>
           <div className="flex justify-center">
             <Button 
-              className="bg-brand-secondary hover:bg-brand-secondary-light text-white"
+              className="bg-[#4AB957] hover:bg-[#4AB957]/90 text-white shadow-lg hover:shadow-xl transition-all"
               size="lg"
               asChild
             >
-              <Link to="mailto:contact@smartedge.in">
+              <a href="mailto:contact@smartedge.in">
                 Contact Us
-              </Link>
+              </a>
             </Button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-border">
+      <footer className="py-12 border-t border-border bg-card/50">
         <div className="container mx-auto px-6">
           <div className="text-center text-sm text-muted-foreground">
             <p>© {new Date().getFullYear()} SmartEdge. All rights reserved.</p>
