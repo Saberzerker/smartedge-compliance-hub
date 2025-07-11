@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   Home, 
@@ -9,102 +9,100 @@ import {
   FileText, 
   Sun, 
   Moon,
-  Menu,
-  X
+  ChevronRight
 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 
-interface SidebarProps {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
+const Sidebar: React.FC = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
 
   const navigationItems = [
-    { name: 'Home', href: '/', icon: Home },
-    { name: 'View Benchmarks', href: '/benchmarks', icon: FileText },
-    { name: 'Compliance Check', href: '/compliance', icon: CheckCircle },
-    { name: 'User Profile', href: '/profile', icon: User },
-    { name: 'Login', href: '/login', icon: Shield },
+    { name: 'Home', href: '/', icon: Home, description: 'Dashboard overview' },
+    { name: 'View Benchmarks', href: '/benchmarks', icon: FileText, description: 'CIS benchmarks' },
+    { name: 'Compliance Check', href: '/compliance', icon: CheckCircle, description: 'Run compliance checks' },
+    { name: 'User Profile', href: '/profile', icon: User, description: 'Your profile settings' },
+    { name: 'Login', href: '/login', icon: Shield, description: 'Authentication' },
   ];
 
   return (
-    <>
-      {/* Mobile overlay */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        />
+    <div 
+      className={cn(
+        "fixed left-0 top-14 h-[calc(100vh-3.5rem)] bg-sidebar/95 backdrop-blur-md border-r border-sidebar-border z-40 transition-all duration-300 ease-in-out group",
+        isExpanded ? "w-64" : "w-16"
       )}
-      
-      {/* Sidebar */}
-      <div className={cn(
-        "fixed top-0 left-0 h-full bg-background border-r border-border z-50 transition-transform duration-300 ease-in-out",
-        "lg:translate-x-0 lg:static lg:z-auto",
-        isOpen ? "translate-x-0" : "-translate-x-full",
-        "w-64"
-      )}>
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-[#4AB957] to-[#58585A] rounded-lg flex items-center justify-center">
-              <Shield className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-bold text-lg bg-gradient-to-r from-[#4AB957] to-[#58585A] bg-clip-text text-transparent">
-              CIS
-            </span>
-          </div>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="lg:hidden p-1 rounded-md hover:bg-accent"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      {/* Sidebar content */}
+      <div className="flex flex-col h-full p-3">
+        
         {/* Navigation */}
-        <nav className="flex-1 p-4">
-          <div className="space-y-2">
-            {navigationItems.map((item) => {
-              const isActive = location.pathname === item.href;
-              return (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className={cn(
-                    "flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                    isActive 
-                      ? "bg-[#4AB957] text-white" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                  )}
-                >
-                  <item.icon className="w-5 h-5" />
-                  <span>{item.name}</span>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Separator */}
-          <div className="my-6 border-t border-border" />
-
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent w-full transition-colors"
-          >
-            {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-            <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
-          </button>
+        <nav className="flex-1 space-y-2 mt-4">
+          {navigationItems.map((item) => {
+            const isActive = location.pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={cn(
+                  "flex items-center px-3 py-3 rounded-lg text-sm font-medium transition-all duration-200 group/item",
+                  "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                  isActive 
+                    ? "bg-primary text-primary-foreground shadow-sm" 
+                    : "text-sidebar-foreground"
+                )}
+              >
+                <item.icon className="w-5 h-5 flex-shrink-0" />
+                <div className={cn(
+                  "ml-3 transition-all duration-200",
+                  isExpanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
+                )}>
+                  <div className="font-medium">{item.name}</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">{item.description}</div>
+                </div>
+                <ChevronRight className={cn(
+                  "w-4 h-4 ml-auto transition-all duration-200",
+                  isExpanded ? "opacity-100" : "opacity-0",
+                  isActive ? "text-primary-foreground" : "text-muted-foreground"
+                )} />
+              </Link>
+            );
+          })}
         </nav>
+
+        {/* Separator */}
+        <div className="my-4 border-t border-sidebar-border" />
+
+        {/* Theme toggle */}
+        <button
+          onClick={toggleTheme}
+          className={cn(
+            "flex items-center px-3 py-3 rounded-lg text-sm font-medium transition-all duration-200",
+            "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          )}
+        >
+          {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+          <div className={cn(
+            "ml-3 transition-all duration-200",
+            isExpanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
+          )}>
+            <div className="font-medium">{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</div>
+            <div className="text-xs text-muted-foreground mt-0.5">Toggle theme</div>
+          </div>
+        </button>
       </div>
-    </>
+
+      {/* Expansion indicator */}
+      <div className={cn(
+        "absolute -right-3 top-8 w-6 h-6 bg-background border border-border rounded-full flex items-center justify-center transition-all duration-200",
+        isExpanded ? "rotate-180" : "rotate-0"
+      )}>
+        <ChevronRight className="w-3 h-3 text-muted-foreground" />
+      </div>
+    </div>
   );
 };
 

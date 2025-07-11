@@ -1,35 +1,27 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, ExternalLink, LogOut } from 'lucide-react';
+import { ExternalLink, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 
-interface NavbarProps {
-  onMenuClick: () => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
+const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-30">
-      <div className="flex items-center justify-between px-4 py-3">
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={onMenuClick}
-            className="lg:hidden p-2 rounded-md hover:bg-accent"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          
-          <div className="hidden lg:block">
-            <h1 className="text-xl font-bold bg-gradient-to-r from-[#4AB957] to-[#58585A] bg-clip-text text-transparent">
-              CIS Web Compliance
-            </h1>
+    <nav className="fixed top-0 left-0 right-0 z-50 h-14 bg-background/80 backdrop-blur-md border-b border-border">
+      <div className="flex items-center justify-between px-6 h-full">
+        {/* Left side - Logo/Brand */}
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
+            <span className="text-white text-sm font-bold">G</span>
           </div>
+          <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+            Governer
+          </span>
         </div>
 
+        {/* Right side - Links and Auth */}
         <div className="flex items-center space-x-4">
           <a
             href="https://smartedge.in"
@@ -38,13 +30,13 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center space-x-1"
           >
             <span>SmartEdge.in</span>
-            <ExternalLink className="w-4 h-4" />
+            <ExternalLink className="w-3 h-3" />
           </a>
           
           {user ? (
             <div className="flex items-center space-x-2">
               <Link to="/profile">
-                <Button variant="outline" size="sm">
+                <Button variant="ghost" size="sm" className="text-sm">
                   {user.name}
                 </Button>
               </Link>
@@ -52,14 +44,14 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
                 variant="ghost"
                 size="sm"
                 onClick={logout}
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground p-2"
               >
                 <LogOut className="w-4 h-4" />
               </Button>
             </div>
           ) : (
             <Link to="/login">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="text-sm">
                 Sign In
               </Button>
             </Link>

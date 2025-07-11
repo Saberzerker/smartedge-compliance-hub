@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -9,19 +9,15 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <Navbar />
+      <Sidebar />
       
-      <div className="lg:ml-64">
-        <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
-        
-        <main className="min-h-[calc(100vh-73px)]">
+      <div className="ml-16 pt-14 transition-all duration-300">
+        <main className="min-h-[calc(100vh-3.5rem)]">
           {children}
         </main>
-        
         <Footer />
       </div>
     </div>
